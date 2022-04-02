@@ -25,13 +25,39 @@ contract ERC721Enumerable is ERC721 {
         B. All tokens to our totalSupply - to allTokens
        */
 
-      _addTokensToTotalSupply(tokenId);
+      _addTokensToAllTokenEnumeration(tokenId);
+      _addTokensToOwnerEnumeration(to, tokenId);
     }
 
-    function _addTokensToTotalSupply(uint256 tokenId) private {
+    // add tokens to the _allTokens array and set the position of the tokens index
+    function _addTokensToAllTokenEnumeration(uint256 tokenId) private {
+      _allTokensIndex[tokenId] = _allTokens.length;
       _allTokens.push(tokenId);
     }
 
+    function _addTokensToOwnerEnumeration(address to, uint256 tokenId) private {
+      // 1. add address and token ID to the _ownedTokens
+      // 2. ownedTokensIndex tokenId set to the address of the ownedTokens position
+      // 3. We want to execute the function with minting
+      _ownedTokensIndex[tokenId] = _ownedTokens[to].length;
+      _ownedTokens[to].push(tokenId);
+    }
+
+    // two functions - one that returns tokenByIndex and
+    // another one that returns tokenOfOwnerByIndex
+
+    function tokenByIndex(uint256 index) public view returns(uint256) {
+      // make sure that index is not out of bounds of the total supply
+      require(index < totalSupply(), 'Global index is out of bounds!');
+      return _allTokens[index];
+    }
+
+    function tokenOfOwnerByIndex(address owner, uint index) public view returns(uint256) {
+      require(index < balanceOf(owner), 'Owner index is out of bounds!');
+      return _ownedTokens[owner][index];
+    }
+
+    // return the total supply of the _alltokens array
     function totalSupply() public view returns (uint256) {
       return _allTokens.length;
     }
