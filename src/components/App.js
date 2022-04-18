@@ -2,6 +2,9 @@ import React, { Component } from 'react';
 import Web3 from 'web3';
 import detectEthereumProvider from '@metamask/detect-provider';
 import KryptoBird from '../abis/KryptoBird.json';
+import { MDBCard, MDBCardBody, MDBCardTitle, MDBCardText, MDBCardImage, MDBBtn } from 'mdb-react-ui-kit';
+
+import './App.css';
 
 class App extends Component {
   async componentDidMount() {
@@ -92,7 +95,7 @@ class App extends Component {
 
   render() {
     return (
-      <div>
+      <div className='container-filled'>
         {console.log(this.state.kryptoBirdz)}
         <nav className='navbar navbar-dark fixed-top bg-dark flex-md-nowrap p-0 shadow'>
           <div 
@@ -119,7 +122,7 @@ class App extends Component {
                 className='content mr-auto ml-auto' 
                 style={{ opacity: '0.8' }}
               >
-                <h1 style={{ color: 'white' }}>
+                <h1 style={{ color: 'black' }}>
                   KryptoBirdz - NFT Marketplace
                 </h1>
 
@@ -143,6 +146,26 @@ class App extends Component {
                 </form>
               </div>
             </main>
+          </div>
+          <hr />
+          <div className='row textCenter'>
+            {this.state.kryptoBirdz.map((kryptoBird, key) => {
+              return (
+                <div key={key}>
+                  <div>
+                    <MDBCard className='token img' style={{ maxWidth: '22rem' }}>
+                      <MDBCardImage src={kryptoBird} position='top' height='250rem' style={{ marginRight: '4px' }} />
+                      <MDBCardBody>
+                        <MDBCardTitle>KryptoBirdz</MDBCardTitle>
+                        <MDBCardText>The KryptoBirdz are 20 uniquely generated KBirdz
+                        <MDBBtn href={kryptoBird}>Download</MDBBtn>
+                        </MDBCardText>
+                      </MDBCardBody>
+                    </MDBCard>
+                  </div>
+                </div>
+              );
+            })}
           </div>
         </div>
       </div>
