@@ -60,6 +60,7 @@ contract ERC721 is ERC165, IERC721 {
     return owner != address(0);
   }
 
+  // NOT A SAFE FUNCTION
   // See ERCERC721Enumerable721.sol for override function
   // This is the one that will be overwritten (virtual)
   function _mint(address to, uint256 tokenId) internal virtual {
@@ -76,6 +77,7 @@ contract ERC721 is ERC165, IERC721 {
     emit Transfer(address(0), to, tokenId);
   }
 
+  // NOT A SAFE FUNCTION
   /// @notice Transfer ownership of an NFT -- THE CALLER IS RESPONSIBLE
   ///  TO CONFIRM THAT `_to` IS CAPABLE OF RECEIVING NFTS OR ELSE
   ///  THEY MAY BE PERMANENTLY LOST
